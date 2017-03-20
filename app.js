@@ -8,7 +8,9 @@ var fs = require('fs');
 
 var privateKey  = fs.readFileSync('./challenget.win.key', 'utf8');
 var certificate = fs.readFileSync('./2_challenget.win.crt', 'utf8');
-var credentials = {key: privateKey, cert: certificate};
+var rootCa = fs.readFileSync('./root.crt', 'utf8');
+var interCa = fs.readFileSync('./1_Intermediate.crt', 'utf8');
+var credentials = {key: privateKey, cert: certificate, ca: [rootCa, interCa]};
 
 var httpServer = http.createServer(function (req, res) {
     res.statusCode = 301;
